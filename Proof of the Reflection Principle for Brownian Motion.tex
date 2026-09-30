@@ -1,0 +1,126 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{ctex}
+\usepackage{natbib}
+\usepackage{hyperref}
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\theoremstyle{definition}
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+
+\title{Proving the Reflection Principle of Brownian Motion using Lévy's Characterization}
+\author{\textbf{Name:}Jia Dingkang  \textbf{Student ID:}202300091035  \textbf{Department:} Statistics Class}
+\date{}
+\renewcommand{\refname}{References}
+
+\begin{document}
+	
+	\maketitle
+	\tableofcontents
+	\newpage
+	\section{Statement of the Reflection Principle for Brownian Motion}
+	Let $\widetilde{B}_t = (\widetilde{B}_t)_{t \geq 0}$ be defined on the probability space $(\Omega, \mathcal{F}, P)$ (where $B = (B_t)_{t \geq 0}$ is a standard Brownian motion on $(\Omega, \mathcal{F}, P)$) by:
+	\[
+	\widetilde{B}_t = 
+	\begin{cases} 
+		B_t, & t < T_a \\
+		2a - B_t, & t \geq T_a 
+	\end{cases}
+	\]
+	where  $T_a$ (the \textbf{stopping time}) is defined as:
+	\[
+	T_a = 
+	\begin{cases} 
+		\inf\{ t \geq 0 : B_t \geq a \}, & a > 0 \\
+		\inf\{ t \geq 0 : B_t \leq a \}, & a < 0 
+	\end{cases}
+	\]
+	(which simplifies to $\inf\{ t \geq 0 : B_t = a \}$).
+	
+	\section{Proof of the Proposition}
+    Next, we present the lemmas to be used:
+	\subsubsection*{Lemma (Lévy's Characterization of Brownian Motion)}
+	Let $B = (B_t)_{t \geq 0}$ be a continuous process on $(\Omega, \mathcal{F}, (\mathcal{F}_t)_{t \geq 0}, P)$. The following are equivalent:\\
+	1. $B$ is a standard Brownian motion.\\
+	2. $B$ is a continuous local martingale, and $(B_t^2 - t)_{t \geq 0}$ is a martingale.
+	\subsubsection*{Lemma}
+	 Suppose \( M \) is a continuous local martingale with \( M_0 = 0 \). Then the following assertions are equivalent:\\
+	1. For any \( t > 0 \), \( \mathbb{E}\left[ \langle M, M \rangle_t \right] < +\infty \);\\
+	2. \( M \) is a martingale, and for any \( t > 0 \), \( \mathbb{E}\left[ M_t^2 \right] < +\infty \).
+	\subsection{Proof of Lemma}
+	
+	Refer to the proofs of \textbf{Proposition 4.2.6} and\textbf{Lemma 5.2.1} in \textit{Fundamentals of Stochastic Processes}.
+	
+	\subsection{Proof of the Reflection Principle of Brownian Motion}
+	We first verify the \textbf{continuity} of $\widetilde{B}$:
+	
+	Fix a sample path $\omega$; $B_t(\omega)$ is a constant for this $\omega$.  For $t < T_a(\omega)$, $\widetilde{B}_t(\omega) = B_t(\omega)$ (continuous in $t$). For $t > T_a(\omega)$, $\widetilde{B}_t(\omega) = 2a - B_t(\omega)$ (also continuous in $t$). At $t = T_a(\omega)$:
+	The left limit of $\widetilde{B}_t(\omega)$ (as $t \to T_a^-$) is $B_{T_a}(\omega) = a$.
+	The right limit of $\widetilde{B}_t(\omega)$ (as $t \to T_a^+$) is $2a - B_{T_a}(\omega) = a$.
+	
+	Thus $\widetilde{B}_t(\omega)$ is continuous at $t = T_a(\omega)$, so $\widetilde{B}_t(\omega)$ is continuous in $t$ for this $\omega$. Since the set of $\omega$ where $B_t(\omega)$ is discontinuous is negligible (by continuity of Brownian motion), $\hat{B}$ has continuous sample paths almost surely.
+	
+
+ \( \widetilde{B}_t = B_t \mathbf{1}_{\{t < T_a\}} + (2a - B_t) \mathbf{1}_{\{t \geq T_a\}} \).
+This can be rewritten as:
+\[
+\widetilde{B}_t = B_t + 2(a - B_t) \mathbf{1}_{\{t \geq T_a\}}.
+\]
+
+Consider the process \( B_t - 2\int_0^t \mathbf{1}_{\{s \geq T_a\}} dB_s \):
+ When \( t < T_a \):
+\[
+B_t - 2\int_0^t \mathbf{1}_{\{s \geq T_a\}} dB_s = B_t.
+\]
+ When \( t \geq T_a \):
+\[
+B_t - 2\int_0^t \mathbf{1}_{\{s \geq T_a\}} dB_s = B_t - 2\int_{T_a}^t dB_s = B_t - 2(B_t - B_{T_a}) = 2B_{T_a} - B_t = 2a - B_t.
+\]
+
+Thus, we conclude:
+\[
+\widetilde{B}_t = B_t - 2\int_0^t \mathbf{1}_{\{s \geq T_a\}} dB_s.
+\]
+The process \( \int_0^t \mathbf{1}_{\{s \geq T_a\}} dB_s \) is a local martingale.
+
+Since
+\[
+\mathbb{E}\left[ \int_0^t \left( \mathbf{1}_{\{s \geq T_a\}} \right)^2 ds \right] < +\infty \quad \text{for } t < +\infty,
+\]
+it follows that \( \int_0^t \mathbf{1}_{\{s \geq T_a\}} dB_s \) is a martingale.
+
+Therefore, \( (\widetilde{B}_t)_{t \geq 0} \) is a martingale.
+
+We can also express \( \widetilde{B}_t \) as:
+\[
+\widetilde{B}_t = \int_0^t \left( 1 - 2\mathbf{1}_{\{s \geq T_a\}} \right) dB_s.
+\]
+
+The quadratic variation of \( \widetilde{B} \) is:
+\[
+\langle \widetilde{B}, \widetilde{B} \rangle_t = \int_0^t \left( 1 - 2\mathbf{1}_{\{s \geq T_a\}} \right)^2 ds = \int_0^t 1 \, ds = t.
+\]
+
+
+By \textbf{Lemma } (Lévy's Characterization), $\hat{B}$ is a \textbf{standard Brownian motion} on $(\Omega, \mathcal{F}, P)$.
+	\section{Postscript}
+	I would like to express my sincere gratitude to Professor Wang for his dedicated instruction in the "Stochastic Processes" course this semester.
+	Stochastic processes theory is abstract and challenging. I used to feel intimidated by the numerous and complex symbols in the textbook. However, through Professor Wang's thorough explanations in class and my repeated reflections after class, I gradually gained insight into the clear internal logic of this course. Your concrete examples not only gave us a more intuitive understanding of the classroom knowledge but also allowed us to appreciate the unique charm of this subject. In short, through studying this course, I have not only firmly mastered professional knowledge but also developed a rigorous academic attitude and logical thinking abilities. This learning experience will serve as a solid foundation for my future research and studies.
+	Once again, I extend my heartfelt thanks to Professor Wang! Wish you every success in your work!
+	
+	\bibliographystyle{plainnat}
+	\begin{thebibliography}{99}
+		\bibitem{revuz1999continuous}
+		Revuz, D., 
+		\& Yor, M. (1999). \textit{Continuous Martingales and Brownian Motion}
+		(3rd ed.). Berlin: Springer. (Chapter VI)
+		
+		\bibitem{wang20xxfundamentals}
+		王汉超. 
+		\textit{随机过程基础}
+		
+	\end{thebibliography}
+
+\end{document}
